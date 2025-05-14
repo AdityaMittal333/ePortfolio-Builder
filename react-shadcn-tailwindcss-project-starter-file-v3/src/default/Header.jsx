@@ -1,0 +1,43 @@
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+
+const Header = ({ user, onLogin, onLogout }) => {
+  const ownerId = localStorage.getItem("ownerId");
+
+  return (
+    <header className="w-full px-6 py-4 bg-white shadow-sm fixed top-0 z-50">
+      <div className="max-w-7xl mx-auto flex justify-between items-center">
+        <div className="text-2xl font-bold text-blue-600 tracking-wide">
+          <a href="/" className="hover:text-blue-500">ePortfolio</a>
+        </div>
+
+        <nav className="hidden md:flex space-x-6 text-gray-600 font-medium">
+          <Link to={`/${ownerId}/profile`} className="hover:text-blue-500">Home</Link>
+          <a href="/features" className="hover:text-blue-500">Features</a>
+          <a href="/about" className="hover:text-blue-500">About</a>
+          <a href="/contact" className="hover:text-blue-500">Contact</a>
+        </nav>
+
+        <div className="flex items-center space-x-4">
+          {user ? (
+            <>
+              {/* <div className="text-sm text-gray-700 font-medium hidden sm:block">
+                {user.email}
+              </div> */}
+              <Button onClick={onLogout} className="bg-blue-600 hover:bg-blue-700 text-white">
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Button onClick={onLogin} className="bg-blue-600 hover:bg-blue-700 text-white">
+              Login with Google
+            </Button>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Header;
