@@ -52,7 +52,7 @@ export default function HomePage() {
 
   const fetchProfile = async (uid) => {
     try {
-      const res = await fetch("http://localhost:3000/api/profile", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/profile`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
