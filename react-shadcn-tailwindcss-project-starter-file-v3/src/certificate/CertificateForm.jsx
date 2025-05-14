@@ -55,7 +55,7 @@ export default function CertificateForm() {
     }
 
     
-    const res = await fetch("http://localhost:3000/api/certificate/create", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/certificate/create`, {
     method: "POST",
     body: formData,
     });
