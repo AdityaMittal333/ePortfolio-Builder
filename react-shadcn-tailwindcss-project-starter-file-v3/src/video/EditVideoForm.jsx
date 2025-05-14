@@ -22,7 +22,7 @@ export default function EditVideoForm() {
 
   useEffect(() => {
     const fetchVideo = async () => {
-      const res = await fetch(`http://localhost:3000/api/video/${id}`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/video/${id}`);
       const data = await res.json();
       setForm(data);
     };
@@ -48,7 +48,7 @@ export default function EditVideoForm() {
     if(ownerId) formData.append("ownerId",ownerId);
     if (video) formData.append("video", video);
 
-    const res = await fetch(`http://localhost:3000/api/video/${id}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/video/${id}`, {
       method: "PUT",
       body: formData,
       headers:{
