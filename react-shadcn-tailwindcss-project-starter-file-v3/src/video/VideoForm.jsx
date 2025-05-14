@@ -47,7 +47,7 @@ export default function VideoForm() {
     }
 
     
-    const res = await fetch("http://localhost:3000/api/video/create", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/video/create`, {
       method: "POST",
       body: formData,
     });  
