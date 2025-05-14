@@ -22,7 +22,7 @@ export default function EditExperienceForm() {
 
   useEffect(() => {
     const fetchProject = async () => {
-      const res = await fetch(`http://localhost:3000/api/experience/${id}`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/experience/${id}`);
       const data = await res.json();
       setForm(data);
     };
@@ -48,7 +48,7 @@ export default function EditExperienceForm() {
     if (image) formData.append("image", image);
     if(ownerId) formData.append("ownerId",ownerId);
 
-    const res = await fetch(`http://localhost:3000/api/experience/${id}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/experience/${id}`, {
       method: "PUT",
       body: formData,
       headers:{
