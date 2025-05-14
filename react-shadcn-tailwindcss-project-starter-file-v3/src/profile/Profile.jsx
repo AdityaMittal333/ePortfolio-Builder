@@ -413,7 +413,7 @@ export default function Profile() {
       setError(null);
       
       try {
-        const response = await fetch("http://localhost:3000/api/profile", {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/profile`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
