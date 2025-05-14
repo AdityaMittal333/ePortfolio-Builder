@@ -16,7 +16,7 @@ export default function AllCertificates() {
   useEffect(() => {
     const fetchCertificates = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/certificate",{
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/certificate`,{
           method:"GET",
           headers:{
             "Content-Type":"application/json",
