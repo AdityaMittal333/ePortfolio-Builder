@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Video = require("../models/VideoSchema"); // Import Video model
+const Video = require("../models/videoSchema"); // Import Video model
 const multer = require("multer");
 const { storage } = require("../cloudConfig2");
 const upload = multer({ storage });
