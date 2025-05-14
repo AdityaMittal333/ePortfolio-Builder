@@ -47,7 +47,7 @@ export default function ProfileForm() {
       formData.append("image", image);
     }
 
-    const res = await fetch(`http://localhost:3000/api/profile/create`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/profile/create`, {
       method: "POST",
       body: formData,
     });
