@@ -26,7 +26,7 @@ export default function EditProfileForm() {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const res = await fetch(`http://localhost:3000/api/profile`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/profile`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export default function EditProfileForm() {
     if (image) formData.append("image", image);
     if (ownerId) formData.append("ownerId", ownerId);
 
-    const res = await fetch(`http://localhost:3000/api/profile/${profileId}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/profile/${profileId}`, {
       method: "PUT",
       body: formData,
     });
