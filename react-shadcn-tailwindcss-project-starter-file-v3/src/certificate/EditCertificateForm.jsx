@@ -23,7 +23,7 @@ export default function EditCertificateForm() {
 
   useEffect(() => {
     const fetchCertificate = async () => {
-      const res = await fetch(`http://localhost:3000/api/certificate/${id}`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/certificate/${id}`);
       const data = await res.json();
       setForm(data);
     };
@@ -49,7 +49,7 @@ export default function EditCertificateForm() {
     if (image) formData.append("image", image);
     if(ownerId) formData.append("ownerId",ownerId);
 
-    const res = await fetch(`http://localhost:3000/api/certificate/${id}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/certificate/${id}`, {
       method: "PUT",
       body: formData,
       headers:{
