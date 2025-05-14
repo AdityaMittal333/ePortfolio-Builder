@@ -11,7 +11,7 @@ export default function ExperienceDetail() {
   useEffect(() => {
     const fetchExperience = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/experience/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/experience/${id}`);
         if (!res.ok) throw new Error('Failed to fetch experience');
         const data = await res.json();
         setExperience(data);
@@ -24,7 +24,7 @@ export default function ExperienceDetail() {
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/experience/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/experience/${id}`, {
         method: 'DELETE',
       });
 
