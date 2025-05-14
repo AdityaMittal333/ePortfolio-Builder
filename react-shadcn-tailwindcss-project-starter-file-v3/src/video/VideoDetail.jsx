@@ -12,7 +12,7 @@ export default function VideoDetail() {
   useEffect(() => {
     const fetchVideo = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/video/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/video/${id}`);
         const data = await res.json();
         setVideo(data);
       } catch (err) {
@@ -24,7 +24,7 @@ export default function VideoDetail() {
 
   const handleDelete = async (req,res) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/video/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/video/${id}`, {
         method: "DELETE",
       });
 
