@@ -47,7 +47,7 @@ export default function ExperienceForm() {
       formData.append("image", image);
     }
 
-    const res = await fetch("http://localhost:3000/api/experience/create", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/experience/create`, {
       method: "POST",
       body: formData,
     });
