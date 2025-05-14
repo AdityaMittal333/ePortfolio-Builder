@@ -12,7 +12,7 @@ export default function CertificateDetail() {
   useEffect(() => {
     const fetchCertificate = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/certificate/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/certificate/${id}`);
         const data = await res.json();
         setCertificate(data);
       } catch (err) {
@@ -24,7 +24,7 @@ export default function CertificateDetail() {
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/certificate/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/certificate/${id}`, {
         method: 'DELETE',
       });
 
