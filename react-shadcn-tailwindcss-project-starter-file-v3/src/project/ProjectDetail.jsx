@@ -11,7 +11,7 @@ export default function ProjectDetail() {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/projects/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/projects/${id}`);
         const data = await res.json();
         setProject(data);
       } catch (err) {
@@ -23,7 +23,7 @@ export default function ProjectDetail() {
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/projects/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/projects/${id}`, {
         method: "DELETE",
       });
 
