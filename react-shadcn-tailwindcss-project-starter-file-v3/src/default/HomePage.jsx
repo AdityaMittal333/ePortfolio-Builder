@@ -68,7 +68,18 @@ export default function HomePage() {
   };
 
   const ownerId = localStorage.getItem("ownerId");
-  console.log(profileData);
+  
+  const handleRedirect = async () => {
+    if (!user) {
+      await handleGoogleLogin();
+    } else {
+      const path =
+        profileData.length > 1
+          ? `/${ownerId}/profile`
+          : `/${ownerId}/profileForm`;
+      window.location.href = path;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-100 px-6 pt-36 pb-10 text-center text-gray-900 transition-colors duration-500">
@@ -88,11 +99,18 @@ export default function HomePage() {
           <p className="text-xl text-gray-600 mb-8">
             Build and customize your online portfolio with ease.
           </p>
-          <Link to={`/${ownerId}/profileForm`}>
+          
+          <Button
+            onClick={handleRedirect}
+            className="bg-gradient-to-r from-blue-600 to-pink-500 text-white px-8 py-4 rounded-xl shadow-lg hover:from-blue-700 hover:to-pink-600 text-lg transition-all"
+          >
+            {profileData.length > 1 ? "My Portfolio" : "Get Started"}
+          </Button>
+{/*           <Link to={`/${ownerId}/profileForm`}>
             <Button className="bg-gradient-to-r from-blue-600 to-pink-500 text-white px-8 py-4 rounded-xl shadow-lg hover:from-blue-700 hover:to-pink-600 text-lg transition-all">
               Get Started
             </Button>
-          </Link>
+          </Link> */}
         </motion.div>
 
         <motion.div
