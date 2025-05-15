@@ -69,17 +69,31 @@ export default function HomePage() {
 
   const ownerId = localStorage.getItem("ownerId");
   
+  // const handleRedirect = async () => {
+  //   if (!user) {
+  //     await handleGoogleLogin();
+  //   } else {
+  //     const path =
+  //       profileData.length > 1
+  //         ? `/${ownerId}/profile`
+  //         : `/${ownerId}/profileForm`;
+  //     window.location.href = path;
+  //   }
+  // };
   const handleRedirect = async () => {
-    if (!user) {
-      await handleGoogleLogin();
+  if (!user) {
+    await handleGoogleLogin();
+  } else {
+    let path;
+    if (profileData.length > 1) {
+      path = `/${ownerId}/profile`;
     } else {
-      const path =
-        profileData.length > 1
-          ? `/${ownerId}/profile`
-          : `/${ownerId}/profileForm`;
-      window.location.href = path;
+      path = `/${ownerId}/profileForm`;
     }
-  };
+    window.location.href = path;
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-100 px-6 pt-36 pb-10 text-center text-gray-900 transition-colors duration-500">
