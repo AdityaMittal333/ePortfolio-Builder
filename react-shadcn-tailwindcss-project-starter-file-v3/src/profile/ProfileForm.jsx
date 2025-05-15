@@ -47,10 +47,10 @@ export default function ProfileForm() {
       formData.append("image", image);
     }
 
-    // const res = await fetch(`${import.meta.env.VITE_API_URL}/profile/create`, {
-    //   method: "POST",
-    //   body: formData,
-    // });
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/profile/create`, {
+      method: "POST",
+      body: formData,
+    });
 
     const data = await res.json();
     console.log("Profile submitted:", data);
