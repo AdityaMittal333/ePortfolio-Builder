@@ -9,6 +9,7 @@ import {
   onAuthStateChangedListener,
   signOutUser,
 } from "../firebase.js";
+import { Link } from 'react-router-dom'
 
 export default function HomePage() {
   const [user, setUser] = useState(null);
@@ -70,16 +71,16 @@ export default function HomePage() {
   console.log(profileData);
   
 
-  const handleRedirect = async () => {
-    if (!user) {
-      await handleGoogleLogin();
-    } else {
-      const path =
-        profileData.length > 1
-          ? `/${ownerId}/profile`
-          : `/${ownerId}/projects`;
-      window.location.href = path;
-    }
+  // const handleRedirect = async () => {
+  //   if (!user) {
+  //     await handleGoogleLogin();
+  //   } else {
+  //     const path =
+  //       profileData.length > 1
+  //         ? `/${ownerId}/profile`
+  //         : `/${ownerId}/projects`;
+  //     window.location.href = path;
+  //   }
   };
 
   return (
@@ -100,12 +101,11 @@ export default function HomePage() {
           <p className="text-xl text-gray-600 mb-8">
             Build and customize your online portfolio with ease.
           </p>
-          <Button
-            onClick={handleRedirect}
-            className="bg-gradient-to-r from-blue-600 to-pink-500 text-white px-8 py-4 rounded-xl shadow-lg hover:from-blue-700 hover:to-pink-600 text-lg transition-all"
-          >
-            {profileData.length > 1 ? "My Portfolio" : "Get Started"}
-          </Button>
+          <Link href={`/${ownerId}/profileForm`}>
+            <Button className="bg-gradient-to-r from-blue-600 to-pink-500 text-white px-8 py-4 rounded-xl shadow-lg hover:from-blue-700 hover:to-pink-600 text-lg transition-all"
+            >Get Started</Button>
+          </Link>
+          
         </motion.div>
 
         <motion.div
