@@ -12,8 +12,12 @@ const Header = ({ user, onLogin, onLogout }) => {
           <a href="/" className="hover:text-blue-500">ePortfolio</a>
         </div>
 
-        <nav className="hidden md:flex space-x-6 text-gray-600 font-medium">
-          <Link to={`/${ownerId}/profile`} className="hover:text-blue-500">Home</Link>
+        <nav className="hidden md:flex space-x-6 text-gray-600 font-medium items-center">
+          <Link to={`/${ownerId}/profile`}>
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+              My Portfolio
+            </Button>
+          </Link>
           <a href="/features" className="hover:text-blue-500">Features</a>
           <a href="/about" className="hover:text-blue-500">About</a>
           <a href="/contact" className="hover:text-blue-500">Contact</a>
@@ -21,14 +25,9 @@ const Header = ({ user, onLogin, onLogout }) => {
 
         <div className="flex items-center space-x-4">
           {user ? (
-            <>
-              {/* <div className="text-sm text-gray-700 font-medium hidden sm:block">
-                {user.email}
-              </div> */}
-              <Button onClick={onLogout} className="bg-blue-600 hover:bg-blue-700 text-white">
-                Logout
-              </Button>
-            </>
+            <Button onClick={onLogout} className="bg-blue-600 hover:bg-blue-700 text-white">
+              Logout
+            </Button>
           ) : (
             <Button onClick={onLogin} className="bg-blue-600 hover:bg-blue-700 text-white">
               Login with Google
