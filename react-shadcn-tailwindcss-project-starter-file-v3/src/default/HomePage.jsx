@@ -77,7 +77,7 @@ export default function HomePage() {
       const path =
         profileData.length > 1
           ? `/${ownerId}/profile`
-          : `/${ownerId}/profileForm`;
+          : `/${ownerId}/projects`;
       window.location.href = path;
     }
   };
