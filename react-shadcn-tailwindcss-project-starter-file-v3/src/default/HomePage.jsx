@@ -13,14 +13,15 @@ import {
 export default function HomePage() {
   const [user, setUser] = useState(null);
   const [profileData, setProfileData] = useState([]);
+  const [triggerRedirect, setTriggerRedirect] = useState(false);
   const [hasRedirected, setHasRedirected] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user) => {
+    const unsubscribe = onAuthStateChangedListener(async (user) => {
       if (user) {
         setUser(user);
         localStorage.setItem("ownerId", user.uid);
-        fetchProfile(user.uid);
+        await fetchProfile(user.uid);
       } else {
         setUser(null);
         setProfileData([]);
@@ -31,6 +32,22 @@ export default function HomePage() {
     return () => unsubscribe();
   }, []);
 
+  const fetchProfile = async (uid) => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/profile`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          ownerId: uid,
+        },
+      });
+      const data = await res.json();
+      setProfileData(data || []);
+    } catch (err) {
+      console.log("Error fetching profile:", err);
+    }
+  };
+
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithGoogle();
@@ -38,7 +55,6 @@ export default function HomePage() {
       setUser(user);
       localStorage.setItem("ownerId", user.uid);
       await fetchProfile(user.uid);
-      console.log("User UID:", user.uid);
     } catch (error) {
       console.log("Error signing in with Google: ", error);
     }
@@ -51,32 +67,15 @@ export default function HomePage() {
     localStorage.removeItem("ownerId");
   };
 
-  const fetchProfile = async (uid) => {
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/profile`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "ownerId": uid,
-        },
-      });
-      const data = await res.json();
-      setProfileData(data || []);
-    } catch (err) {
-      console.log("Error fetching profile:", err);
-    }
-  };
-
   const handleRedirect = async () => {
     if (!user) {
       await handleGoogleLogin();
-      // redirect happens in useEffect
     }
+    setTriggerRedirect(true); // allow redirect after profile loads
   };
 
-  // Redirect after user and profileData are set
   useEffect(() => {
-    if (user && profileData && !hasRedirected) {
+    if (triggerRedirect && user && profileData && !hasRedirected) {
       const ownerId = localStorage.getItem("ownerId");
       const path =
         profileData.length > 1
@@ -86,13 +85,12 @@ export default function HomePage() {
       setHasRedirected(true);
       window.location.href = path;
     }
-  }, [user, profileData, hasRedirected]);
+  }, [user, profileData, triggerRedirect, hasRedirected]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-100 px-6 pt-36 pb-10 text-center text-gray-900 transition-colors duration-500">
       <Header user={user} onLogin={handleGoogleLogin} onLogout={handleSignOut} />
 
-      {/* Hero Section */}
       <div className="mt-20 flex flex-col md:flex-row items-center justify-center gap-12 max-w-6xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -144,7 +142,6 @@ export default function HomePage() {
         </motion.div>
       </div>
 
-      {/* Features Section */}
       <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
         {[
           {
