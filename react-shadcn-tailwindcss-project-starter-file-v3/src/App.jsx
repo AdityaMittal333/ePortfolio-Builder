@@ -58,7 +58,7 @@ function App() {
       <Header user={user} onLogin={handleLogin} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/:ownerId/profileForm" element={<VideoForm />} />
+        <Route path="/:ownerId/profileForm" element={<ProfileForm />} />
         <Route path="/:ownerId/profile" element={<Profile />} />
         <Route path="/:ownerId/profile/edit" element={<EditProfileForm />} />
 
