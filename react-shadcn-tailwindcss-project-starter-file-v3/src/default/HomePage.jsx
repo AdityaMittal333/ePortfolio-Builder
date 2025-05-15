@@ -9,18 +9,18 @@ import {
   onAuthStateChangedListener,
   signOutUser,
 } from "../firebase.js";
-import { Link } from "react-router-dom";
 
 export default function HomePage() {
   const [user, setUser] = useState(null);
   const [profileData, setProfileData] = useState([]);
+  const [hasRedirected, setHasRedirected] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => {
       if (user) {
         setUser(user);
         localStorage.setItem("ownerId", user.uid);
-        fetchProfile(user.uid); // Fetch profile if user is logged in
+        fetchProfile(user.uid);
       } else {
         setUser(null);
         setProfileData([]);
@@ -67,33 +67,26 @@ export default function HomePage() {
     }
   };
 
-  const ownerId = localStorage.getItem("ownerId");
-  
-  // const handleRedirect = async () => {
-  //   if (!user) {
-  //     await handleGoogleLogin();
-  //   } else {
-  //     const path =
-  //       profileData.length > 1
-  //         ? `/${ownerId}/profile`
-  //         : `/${ownerId}/profileForm`;
-  //     window.location.href = path;
-  //   }
-  // };
   const handleRedirect = async () => {
-  if (!user) {
-    await handleGoogleLogin();
-  } else {
-    let path;
-    if (profileData.length > 1) {
-      path = `/${ownerId}/profile`;
-    } else {
-      path = `/${ownerId}/profileForm`;
+    if (!user) {
+      await handleGoogleLogin();
+      // redirect happens in useEffect
     }
-    window.location.href = path;
-  }
-};
+  };
 
+  // Redirect after user and profileData are set
+  useEffect(() => {
+    if (user && profileData && !hasRedirected) {
+      const ownerId = localStorage.getItem("ownerId");
+      const path =
+        profileData.length > 1
+          ? `/${ownerId}/profile`
+          : `/${ownerId}/profileForm`;
+
+      setHasRedirected(true);
+      window.location.href = path;
+    }
+  }, [user, profileData, hasRedirected]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-100 px-6 pt-36 pb-10 text-center text-gray-900 transition-colors duration-500">
@@ -113,18 +106,13 @@ export default function HomePage() {
           <p className="text-xl text-gray-600 mb-8">
             Build and customize your online portfolio with ease.
           </p>
-          
+
           <Button
             onClick={handleRedirect}
             className="bg-gradient-to-r from-blue-600 to-pink-500 text-white px-8 py-4 rounded-xl shadow-lg hover:from-blue-700 hover:to-pink-600 text-lg transition-all"
           >
             {profileData.length > 1 ? "My Portfolio" : "Get Started"}
           </Button>
-{/*           <Link to={`/${ownerId}/profileForm`}>
-            <Button className="bg-gradient-to-r from-blue-600 to-pink-500 text-white px-8 py-4 rounded-xl shadow-lg hover:from-blue-700 hover:to-pink-600 text-lg transition-all">
-              Get Started
-            </Button>
-          </Link> */}
         </motion.div>
 
         <motion.div
